@@ -14,6 +14,10 @@ libraryDependencies ++= Seq(
     "com.raquo" %%% "laminar" % "0.13.1",
 )
 
+val materialVersion = "13.0.0"
 Compile / npmDependencies ++= Seq(
-    "@material/button" -> "13.0.0",
+    "@material/button" -> materialVersion,
+    "@material/top-app-bar" -> materialVersion,
+    "@material/list" -> materialVersion,
+    "@material/drawer" -> materialVersion,
 )
