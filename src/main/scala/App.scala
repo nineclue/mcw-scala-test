@@ -89,6 +89,45 @@ object MDCDrawer:
 
     def attachTo(e: dom.raw.Element) = new MDCDrawer(e)
 
+@js.native
+@JSImport("@material/textfield", "MDCTextField")
+class MDCTextField(val e: dom.raw.Element) extends js.Object
+
+object MDCTextField:
+    private val pre = "mdc-text-field"
+    private def tf(rest: String = "") = pre ++ rest
+    def apply(id: String, hint: String, hintId: String) = 
+        val l = tag("label", tf(), tf("--filled"))
+        val sripple = tag("span", tf("__ripple"))
+        val flabel = tag("span", "mdc-floating-label")
+        flabel.setAttribute("id", hintId)
+        flabel.textContent = hint
+        val input = tag("input", tf("__input"))
+        input.setAttribute("type", "text")
+        input.setAttribute("aria-labelledby", hintId)
+        val slripple = tag("span", "mdc-line-ripple")
+        Seq(sripple, flabel, input, slripple).foreach(l.appendChild)
+        l
+
+object MDCTextArea:
+    private val pre = "mdc-text-field"
+    private def tf(rest: String = "") = pre ++ rest
+    def apply(id: String, rows: Int = 8, cols: Int = 40) = 
+        val l = tag("label", tf(), tf("--filled"), tf("--textarea"), tf("--no-label"))
+        val sripple = tag("span", tf("__ripple"))
+        val sresizer = tag("span", tf("__resizer"))
+        val textarea = tag("textarea", tf("__input"))
+        textarea.setAttribute("id", id)
+        textarea.setAttribute("rows", rows.toString)
+        textarea.setAttribute("cols", cols.toString)
+        textarea.setAttribute("aria-label", "Label")
+        sresizer.appendChild(textarea)
+        val slripple = tag("span", "mdc-line-ripple")
+        Seq(sripple, sresizer, slripple).foreach(l.appendChild)
+        // mount하고 난 다음 함수 호출하도록 해보자!!!
+        // new MDCTextField(l)
+        l
+
 object App:
     def main(as: Array[String]): Unit = 
         println("Hello, Web!")
@@ -112,6 +151,14 @@ object App:
         content.appendChild(h2)
         content.appendChild(b)
         
+        val tf = MDCTextField("tf", "이름", "name")
+        content.appendChild(tf)
+        // new MDCTextField(tf)
+
+        val ta = MDCTextArea("ta")
+        content.appendChild(ta)
+        new MDCTextField(ta)
+
         dom.document.body.appendChild(side)
         dom.document.body.appendChild(content)
         // dom.document.body.appendChild(h2)
