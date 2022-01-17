@@ -20,4 +20,5 @@ Compile / npmDependencies ++= Seq(
     "@material/top-app-bar" -> materialVersion,
     "@material/list" -> materialVersion,
     "@material/drawer" -> materialVersion,
+    "@material/textfield" -> materialVersion,
 )
